@@ -10,7 +10,10 @@ def invalid_arguments():
     print("Invalid arguments.", file=sys.stderr) # TODO: Usage
     sys.exit(1)
 
-_, secrets_file, mode, *files = sys.argv
+try:
+    _, secrets_file, mode, *files = sys.argv
+except ValueError:
+    invalid_arguments()
 
 if mode not in ("hide", "reveal"):
     invalid_arguments()
