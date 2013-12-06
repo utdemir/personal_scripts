@@ -1,7 +1,7 @@
 personal_scripts
 ================
 
-A repository for my personal scripts. Those scripts aren't documented, but feel free to ask anything about them.
+A repository for my personal scripts. Those scripts aren't documented, but feel free to ask me anything about them.
 
 hide.py
 -------
