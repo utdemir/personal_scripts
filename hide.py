@@ -30,7 +30,7 @@ salt, *secrets = [i.strip() for i in open(secrets_file) if i.strip()]
 
 def hash(secret, fname):
     key = "%s:%s:%s" % (salt, fname, secret)
-    return hashlib.sha256(key.encode()).hexdigest()
+    return "hidepy" + hashlib.sha256(key.encode()).hexdigest()
 
 for filepath in files:
     filename = os.path.basename(filepath) 
