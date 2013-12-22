@@ -28,3 +28,8 @@ battery-notifier.py
 
 A script I used when using i3 window manager. It simply periodically reads battery stats and then notifies the user
 via libnotify. BATTERY_PATH and AC_PATH variables should be modified for every computer(They usually differ). 
+
+submit-notify.py
+----------------
+
+It logins into Hacettepe University CS Department's assignment submission system and notifies about upcoming assignments.
