@@ -58,7 +58,7 @@ for name, d in episodes:
         print(name, "S%02dE%02d" % d["episode"], "-", d["size"], "-", d["uploaded"], 
                 "(%s)" % d["name"], "[%s/%s]" % (d["leechers"], d["seeders"]))
         print(d["magnet"])
+        print()
     else:
         print("Connection error when searching for %s." % name)
             
-    print()
