@@ -27,6 +27,7 @@ if not all(map(os.path.isfile, files)):
 files = set(files) - {secrets_file} # To allow `./hide.py secrets lock *`
 
 salt, *secrets = [i.strip() for i in open(secrets_file) if i.strip()]
+secrets.sort(key=len, reverse=True)
 
 def hash(secret, fname):
     key = "%s:%s:%s" % (salt, fname, secret)
