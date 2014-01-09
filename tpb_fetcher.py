@@ -45,7 +45,8 @@ series = [
           "Elementary",
           "Bones",
           "The Big Bang Theory",
-          "Revolution"
+          "Revolution",
+          "Sherlock"
          ]
 
 episodes = []
