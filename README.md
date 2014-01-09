@@ -33,3 +33,8 @@ submit-notify.py
 ----------------
 
 It logins into Hacettepe University CS Department's assignment submission system and notifies about upcoming assignments.
+
+dropbox_poll.sh
+---------------
+
+Dropbox doesn't handle connection losses well, so this script forces it to reconnect by restarting it periodically. Needs dropbox command from `dropbox.py`.
