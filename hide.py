@@ -15,7 +15,7 @@ try:
 except ValueError:
     invalid_arguments()
 
-if mode not in ("hide", "reveal"):
+if mode not in ("hide", "reveal", "ensure"):
     invalid_arguments()
 
 secrets_file = os.path.abspath(secrets_file)
@@ -43,5 +43,10 @@ for filepath in files:
                contents = contents.replace(s, h)
            elif mode == "reveal":
                contents = contents.replace(h, s)
+           elif mode == "ensure":
+               if s in contents:
+                   print("Error: '%s' contains a secret." % filename)
+                   sys.exit(1)
+
     with open(filename, "w") as f:
        f.write(contents)
