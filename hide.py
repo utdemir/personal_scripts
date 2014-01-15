@@ -36,7 +36,7 @@ def hash(secret, fname):
 for filepath in files:
     filename = os.path.basename(filepath) 
     hashes = [(i, hash(i, filename)) for i in secrets] 
-    with open(filename, "r") as f:
+    with open(filepath, "r") as f:
        contents = f.read()
        for s, h in hashes:
            if mode == "hide":
@@ -48,5 +48,5 @@ for filepath in files:
                    print("Error: '%s' contains a secret." % filename)
                    sys.exit(1)
 
-    with open(filename, "w") as f:
+    with open(filepath, "w") as f:
        f.write(contents)
