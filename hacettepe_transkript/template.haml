@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %title= t.info['name']
+    %meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
+    %link(rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/5.0.2/css/foundation.css")
+  %body
+    .row
+      %h2
+        %b= t.info['name'].split(', ').reverse * ' '
+        %small.pull-right= "GPA: #{t.info['gpa']}"
+      
+      %table.table.table-striped(style="width: 100%;")
+        %tbody
+          - t.terms.reverse_each do |term_name, term|
+            %thead
+              %tr(style="padding-top: 30px")
+                %th.text-center(colspan=3)= term_name
+              %tr
+                %th Kodu
+                %th Adı
+                %th Notu
+            - term[:lessons].each do |lesson|
+              %tr
+                %td= lesson[:id]
+                %td= lesson[:name]
+                %td= lesson[:letter]
+            %tr
+              %td
+              %td
+                %b Dönem Ortalaması
+              %td
+                %b= term[:tpa]

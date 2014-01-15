@@ -38,3 +38,8 @@ dropbox_poll.sh
 ---------------
 
 Dropbox doesn't handle connection losses well, so this script forces it to reconnect by restarting it periodically. Needs dropbox command from `dropbox.py`.
+
+hacettepe_transkript/
+---------------------
+
+A script that fetches transcript from Hacettepe University's student information system, and templates it. 
