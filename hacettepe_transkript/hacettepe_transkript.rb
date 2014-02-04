@@ -99,8 +99,9 @@ class Transcript
 				lesson[:t] = lesson[:other][1].to_i
 				lesson[:p] = lesson[:other][2].to_i
 				lesson[:c] = lesson[:other][3].to_i
-				lesson[:letter] = lesson[:other][4]
-				lesson.delete :other
+                lesson[:letter] = lesson[:other][4]
+				lesson[:resit] = lesson[:other][5].empty? ? nil : lesson[:other][5]
+                lesson.delete :other
 				lesson.freeze
 			end
 			term[:lessons].sort_by! { |i| i[:letter] }
