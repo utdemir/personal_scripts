@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import sys
 import hashlib
 import itertools
@@ -47,20 +48,27 @@ def hash(secret, fname):
     key = "%s:%s:%s" % (salt, fname, secret)
     return "hidepy" + hashlib.sha256(key.encode()).hexdigest()
 
-for filepath in all_files:
-    filename = os.path.basename(filepath) 
-    hashes = [(i, hash(i, filename)) for i in secrets] 
-    with open(filepath, "r") as f:
-       contents = f.read()
-       for s, h in hashes:
-           if mode == "hide":
-               contents = contents.replace(s, h)
-           elif mode == "reveal":
-               contents = contents.replace(h, s)
-           elif mode == "ensure":
-               if s in contents:
-                   print("Error: '%s' contains a secret." % filename)
-                   sys.exit(1)
+def replace_all(s, d):
+    pat = re.compile("|".join(map(re.escape, d)))
+    found = re.findall(pat, s)
+    return (len(found), re.sub(pat, lambda i: d[i.group(0)], s))
 
-    with open(filepath, "w") as f:
-       f.write(contents)
+for filepath in all_files:
+    filename = os.path.basename(filepath)
+    hashes = {i: hash(i, filename) for i in secrets}
+    
+    with open(filepath, "r") as f:
+        content = f.read()
+        c = 0
+        if mode == "hide":
+            c, content = replace_all(contents, hashes)
+            if c: print("%s secrets hidden in %s." % (c, filename))
+        elif mode == "reveal":
+            c, content = replace_all(contents, {j: i for i, j in hashes.items()})
+            if c: print("%s secrets revealed in %s." % (c, filename))
+        elif mode == "ensure" and any(s in content for s in hashes):
+            print("Error: '%s' contains a secret." % filename)
+            sys.exit(1)
+    if c:
+        with open(filepath, "w") as f:
+            f.write(content)
