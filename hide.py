@@ -61,10 +61,10 @@ for filepath in all_files:
         content = f.read()
         c = 0
         if mode == "hide":
-            c, content = replace_all(contents, hashes)
+            c, content = replace_all(content, hashes)
             if c: print("%s secrets hidden in %s." % (c, filename))
         elif mode == "reveal":
-            c, content = replace_all(contents, {j: i for i, j in hashes.items()})
+            c, content = replace_all(content, {j: i for i, j in hashes.items()})
             if c: print("%s secrets revealed in %s." % (c, filename))
         elif mode == "ensure" and any(s in content for s in hashes):
             print("Error: '%s' contains a secret." % filename)
