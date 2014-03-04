@@ -6,8 +6,8 @@ import re
 from datetime import datetime
 from operator import itemgetter
 from urllib.parse import quote
+from subprocess import call
 
-import notify2
 import requests
 
 login = {"user": "bhidepy84c229559cef6aecdc1e74ba51560e7a8cb7786d489f41cfb823422ec98bc8df", "password": "hidepy9ec29cac1134bdbf1262bed0aecf3ed3a5b982a3be99d6d407f28979118dbeae", "submit": "Login"}
@@ -40,15 +40,15 @@ def read_delta(d):
     hours, s = divmod(s, 60 * 60)
     minutes, seconds = divmod(s, 60)
     if days:
-        pattern = "{days} days {hours} hours remaining."
+        pattern = "{d} days {h} hours remaining."
     else:
-        pattern = "{hours} hours {minutes} minutes remaining."
+        pattern = "{h} hours {m} minutes remaining."
 
     if days == 1: pattern = pattern.replace("days", "day")
     if hours == 1: pattern = pattern.replace("hours", "hour")
     if minutes == 1: pattern = pattern.replace("minutes", "minute")    
         
-    return pattern.format(days=int(days), hours=int(hours), minutes=int(minutes))
+    return pattern.format(d=int(days), h=int(hours), m=int(minutes))
     
 for assignment in assignments:
     delta = assignment["end"] - datetime.today() 
@@ -67,13 +67,10 @@ def is_submitted(id_):
 for i in assignments:
     i["submitted"] = is_submitted(i["id"])
 
-notify2.init("CS Hacettepe - Submit")
-
 for assignment in assignments:
     delta = assignment["end"] - datetime.today() 
     ret = "{id} ({name}): {delta}".format(delta=read_delta(delta), **assignment)
     if assignment["submitted"]: ret = "\u0336".join(ret + " ") #strikethrough submitted assignments
 
-    n = notify2.Notification(ret)
-    n.show()
+    call(["notify-send", ret])
 
